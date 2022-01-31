@@ -1,38 +1,47 @@
-# create-svelte
+This repo has been created to demostrate issue that happens when using svelte-testing-library in that when using a components (i'm using the `Button` component from carbon-components-svelte with the `as` prop which renders the components with a slot, the component defintion is here - https://github.com/carbon-design-system/carbon-components-svelte/blob/master/src/Button/Button.svelte
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);
+You can see in https://github.com/PClmnt/svelte-testing-library-issue/blob/900a6ac2af49a8f7d6ebc2477ecab5efc28c68ae/src/lib/ConditionalTest.svelte that there is a conditional that is trigged on the Button click. 
 
-## Creating a project
+However, the else part of the conditional is never triggered when using `fireEvent.click` within https://github.com/PClmnt/svelte-testing-library-issue/blob/900a6ac2af49a8f7d6ebc2477ecab5efc28c68ae/src/lib/test/ConditionalTest.spec.js and therefore the test fails as it cannot see the text within the conditional. 
 
-If you're seeing this, you've probably already done this step. Congrats!
 
-```bash
-# create a new project in the current directory
-npm init svelte@next
 
-# create a new project in my-app
-npm init svelte@next my-app
+To see this happening clone the repo and
+
+```
+yarn
+
+yarn test
+
 ```
 
-> Note: the `@next` is temporary
+and you will see the output showing that the conditional isn't showing. 
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
+  ConditionalTest
+    ✕ Navigates past the first selection (1047 ms)
 
-## Building
+  ● ConditionalTest › Navigates past the first selection
 
-Before creating a production version of your app, install an [adapter](https://kit.svelte.dev/docs#adapters) for your target environment. Then:
+    Unable to find an element with the text: /example text?/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
 
-```bash
-npm run build
+    <body>
+      <div>
+        <section>
+          <div>
+            <span>
+              test
+            </span>
+
+          </div>
+        </section>
+      </div>
+    </body>
+
+      11 |         await fireEvent.click(button)
+      12 |         debug()
+    > 13 |         expect(await screen.findByText(/example text?/i)).toBeInTheDocument()
+         |                             ^
+      14 |     })
+      15 | })
 ```
-
-> You can preview the built app with `npm run preview`, regardless of whether you installed an adapter. This should _not_ be used to serve your app in production.
