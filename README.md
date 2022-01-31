@@ -1,4 +1,6 @@
-This repo has been created to demostrate issue that happens when using svelte-testing-library in that when using a components (i'm using the `Button` component from carbon-components-svelte with the `as` prop which renders the components with a slot, the component defintion is here - https://github.com/carbon-design-system/carbon-components-svelte/blob/master/src/Button/Button.svelte
+This repo has been created to demostrate issue that happens when using svelte-testing-library, that seems to have something to do with components that use slots not firing events correctly? 
+
+i'm using the `Button` component from carbon-components-svelte with the `as` prop which renders the components with a slot to demonstrate this. The component defintion is here - https://github.com/carbon-design-system/carbon-components-svelte/blob/master/src/Button/Button.svelte
 
 You can see in https://github.com/PClmnt/svelte-testing-library-issue/blob/900a6ac2af49a8f7d6ebc2477ecab5efc28c68ae/src/lib/ConditionalTest.svelte that there is a conditional that is trigged on the Button click. 
 
